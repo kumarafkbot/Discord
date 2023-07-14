@@ -1,88 +1,137 @@
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Locked Website</title>
     <style>
         body {
-            background-color: #212121;
-            color: #fff;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            color: #fff;
         }
 
         .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 40px;
-            background-color: #333;
+            max-width: 600px;
+            margin: 100px auto;
+            background-color: #444;
+            padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            text-align: center;
-            color: #fff;
+            margin-top: 0;
         }
 
         p {
-            color: #ccc;
-        }
-
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 3px;
-            border: 1px solid #777;
-            background-color: #333;
-            color: #fff;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
+            margin-bottom: 20px;
         }
 
         .description {
-            margin-top: 20px;
             font-size: 14px;
-            text-align: center;
-            color: #ccc;
+            color: #fff;
+        }
+
+        .credit-container {
+            margin-top: 40px;
         }
 
         .credit {
-            margin-top: 20px;
             font-size: 12px;
-            text-align: center;
-            color: #ccc;
+            color: #fff;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: #333;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            color: #fff;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-check {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .modal-input {
+            margin-bottom: 10px;
+        }
+
+        .modal-submit {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
         }
     </style>
     <script>
-        function checkPasscode() {
-            var passcode = document.getElementById("passcode").value;
-            if (passcode === "6969") {
-                window.location.href = "https://discord.com/app";
-            } else {
-                alert("Incorrect passcode. Please try again.");
-            }
+        window.onload = function() {
+            var modal = document.getElementById("modal");
+            modal.style.display = "block";
+        };
+
+        function closeModal() {
+            var modal = document.getElementById("modal");
+            modal.style.display = "none";
         }
 
-        function handleKeyPress(event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                checkPasscode();
-            }
+        function toggleDarkMode() {
+            var body = document.querySelector("body");
+            var container = document.querySelector(".container");
+            var modalContent = document.querySelector(".modal-content");
+            var modalClose = document.querySelector(".modal-close");
+
+            body.classList.toggle("dark-mode");
+            container.classList.toggle("dark-mode");
+            modalContent.classList.toggle("dark-mode");
+            modalClose.classList.toggle("dark-mode");
         }
     </script>
 </head>
@@ -90,10 +139,27 @@
     <div class="container">
         <h1>Locked Website</h1>
         <p>Please enter the passcode to access the website:</p>
-        <input type="password" id="passcode" onkeypress="handleKeyPress(event)">
-        <button onclick="checkPasscode()">Submit</button>
+        <input type="password" id="passcode">
+        <br>
+        <button class="modal-submit" onclick="checkPasscode()">Submit</button>
         <p class="description">Are you worried about the privacy of Discord chats? Well, guess what? This lock system will make sure that the shortcut needs a password. For the password, contact Sahitya.</p>
-        <p class="credit">Created By Kumar Sahitya</p>
+        <div class="credit-container">
+            <p class="credit">Created By Kumar Sahitya</p>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>This website requires Cheetos</h2>
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+            </div>
+            <p>Please enjoy some Cheetos while browsing this website.</p>
+            <div class="modal-check">
+                <input type="checkbox" id="checkbox">
+                <label class="modal-check-label" for="checkbox">Don't show again</label>
+            </div>
+        </div>
     </div>
 </body>
 </html>
