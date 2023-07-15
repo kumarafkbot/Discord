@@ -1,120 +1,42 @@
-
+html
 <!DOCTYPE html>
 <html>
 <head>
     <title>Locked Website</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 100px auto;
-            background-color: #444;
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            margin-top: 0;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        .description {
-            font-size: 14px;
-            color: #fff;
-        }
-
-        .credit-container {
-            margin-top: 40px;
-        }
-
-        .credit {
-            font-size: 12px;
-            color: #fff;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-
-        .modal-content {
-            background-color: #333;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            color: #fff;
-            position: relative;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-close {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-
-        .modal-close:hover,
-        .modal-close:focus {
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal-check {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .modal-input {
-            margin-bottom: 10px;
-        }
-
-        .modal-submit {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
+      body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #333; color: #fff; } .container { max-width: 600px; margin: 100px auto; background-color: #444; padding: 20px; border-radius: 5px; text-align: center; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); } h1 { margin-top: 0; } p { margin-bottom: 20px; } .description { font-size: 14px; color: #fff; } .credit-container { margin-top: 40px; } .credit { font-size: 12px; color: #fff; } .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6); } .modal-content { background-color: #333; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 400px; color: #fff; position: relative; } .modal-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 20px; } .modal-close { color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; position: absolute; top: 10px; right: 10px; } .modal-close:hover, .modal-close:focus { color: #fff; text-decoration: none; cursor: pointer; } .modal-check { display: flex; align-items: center; margin-top: 20px; } .modal-input { margin-bottom: 10px; } .modal-submit { background-color: #4CAF50; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; } .dark-mode { background-color: #111; color: #ddd; }
     </style>
     <script>
         window.onload = function() {
             var modal = document.getElementById("modal");
-            modal.style.display = "block";
+            var modalCheckbox = document.getElementById("modal-checkbox");
+            var storedValue = localStorage.getItem("modalShown");
+
+            if (!storedValue) {
+                modal.style.display = "block";
+            }
+
+            modalCheckbox.checked = storedValue;
+
+            modalCheckbox.addEventListener("change", function () {
+                if (modalCheckbox.checked) {
+                    localStorage.setItem("modalShown", true);
+                } else {
+                    localStorage.removeItem("modalShown");
+                }
+            });
+
+            // Function to handle the enter key press event
+            function handleKeyPress(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    checkPasscode();
+                }
+            }
+
+            // Add event listener to the passcode input field
+            var passcodeInput = document.getElementById("passcode");
+            passcodeInput.addEventListener("keypress", handleKeyPress);
         };
 
         function closeModal() {
@@ -132,6 +54,17 @@
             container.classList.toggle("dark-mode");
             modalContent.classList.toggle("dark-mode");
             modalClose.classList.toggle("dark-mode");
+        }
+
+        function checkPasscode() {
+            var passcodeInput = document.getElementById("passcode");
+            var passcode = passcodeInput.value;
+
+            if (passcode === "1111") {
+                window.location.href = "https://discord.com/app";
+            } else {
+                alert("Incorrect passcode. Please try again.");
+            }
         }
     </script>
 </head>
@@ -156,8 +89,8 @@
             </div>
             <p>Please enjoy some Cheetos while browsing this website.</p>
             <div class="modal-check">
-                <input type="checkbox" id="checkbox">
-                <label class="modal-check-label" for="checkbox">Don't show again</label>
+                <input type="checkbox" id="modal-checkbox">
+                <label for="modal-checkbox">Do not show this message again</label>
             </div>
         </div>
     </div>
